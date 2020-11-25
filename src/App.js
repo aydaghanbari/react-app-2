@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import './app.css';
+import ReactDOM from 'react-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+    state= {
+        numInput: "",
+        powerResult: "",
+        powBtn: false
+    };
+    handleInputChange = (event) => {
+        let powBtn =this.state.powBtn; 
+        this.setState ({numInput: event.target.value, powBtn: false});
+    };
+    handlePowerButton = () => { 
+        this.setState({powBtn: true}); 
+    }
+    render() {
+        let powerResult = this.state.powerResult;
+            if (this.state.powBtn === true && this.state.numInput > 0 ){ 
+                powerResult = this.state.numInput * this.state.numInput;
+            } else if (this.state.powBtn === true && this.state.numInput <= 0 ){
+              powerResult = (
+                <span>Please enter a number greater than zero</span>
+                );
+            }
+        return (
+        <div>
+            <label for="num">Enter a number:</label>
+            <input type="number" id="num" value={this.state.numInput} onChange={this.handleInputChange}></input>
+            <button onClick={this.handlePowerButton}>power of two</button>
+           <p >{powerResult}</p> 
+            
+        </div>
+        );
+    }   
 }
-
 export default App;
